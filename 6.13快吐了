@@ -1,0 +1,38 @@
+rm(list = ls())
+library(tidyverse)
+flights_planes<-left_join(nycflights13::flights,nycflights13::planes)
+flights_planes<-filter(flights_planes,str_detect(tailnum,"W")==TRUE)
+flights_planes<-filter(flights_planes,!is.na(seats),!is.na(engines))
+flights_sum<-flights_planes%>%group_by(engines,seats)%>%summarise(sum_distance=sum(distance),sum_delay=sum(arr_delay))
+unique(flights_planes$engine)
+
+ex2
+myflights<-filter(nycflights13::flights,!is.na(dep_time))
+dep_ca<-function(a)
+{
+  if((a/100)>6&(a/100)<12)
+  {return("aft")}
+  else if((a/100)>12&(a/100)<18)
+  {return("eve")}
+  else if((a/100)>18&(a/100)<24)
+  {return("nt")}
+  else if((a/100)>0&(a/100)<6)
+  {return("da")}
+  else if(a==0)
+  {return("pa")}
+}
+
+myflights <- myflights %>%
+  mutate(dep_interval0=ifelse(dep_time<=600, "dawn", NA),
+         dep_interval0=ifelse(dep_time>600 & dep_time<=1200, "morning", dep_interval0),
+         dep_interval0=ifelse(dep_time>1200 & dep_time<=1800, "afternoon", dep_interval0),
+         dep_interval0=ifelse(dep_time>1800, "night", dep_interval0) )
+myflights_m<-myflights%>%group_by(year,month,day,dep_interval0)%>%summarise(mean=mean(arr_delay,na.rm=TRUE),var=var(arr_delay,na.rm=TRUE))
+mydata<-filter()剩下就白给了
+
+#凭什么啊
+#凭什么我的不行啊 吐了吐了
+
+ex3
+
+
